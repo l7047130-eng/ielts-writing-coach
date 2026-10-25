@@ -1,0 +1,34 @@
+{
+  "name": "writing-coach",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "本地雅思写作批改：四维评分 + AI 改写 + 追问对话，双评一致性检测",
+  "scripts": {
+    "start": "concurrently -k -n server,web -c blue,green \"npm:backend\" \"npm:frontend\"",
+    "dev": "npm start",
+    "backend": "node server.js",
+    "frontend": "vite",
+    "build": "vite build",
+    "test": "node --test \"tests/*.test.mjs\"",
+    "probe": "node scripts/probe.js",
+    "check": "node scripts/check.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^2.15.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.6",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "tailwindcss": "^4.0.6",
+    "vite": "^6.1.0"
+  }
+}

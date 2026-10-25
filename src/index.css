@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-500: oklch(0.62 0.16 250);
+  --color-brand-600: oklch(0.55 0.17 250);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+  color: oklch(0.28 0.01 250);
+  background: oklch(0.985 0.002 240);
+}
+
+.card {
+  background: #fff;
+  border: 1px solid oklch(0.93 0.005 240);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.stat-num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.prose-essay {
+  white-space: pre-wrap;
+  line-height: 1.85;
+  font-size: 15px;
+  color: oklch(0.32 0.01 250);
+}
+
+.scroll-thin::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: oklch(0.88 0.005 240);
+  border-radius: 4px;
+}
