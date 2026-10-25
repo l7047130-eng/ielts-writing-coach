@@ -139,6 +139,53 @@ AI 写的东西不一定是合规 JSON，所以落盘前有三道关：
 
 复核用的是**服务端存的那份原文、题目、配图和用时**，不接受客户端重新提交的材料；合并时保留完整批改的点评，不会因为复核给的分数更高就换成空点评。
 
+## 数据从哪来、存在哪
+
+### 这套数据根不是本项目的
+
+`~/.ielts/` 这个目录和里面的划分，来自另一套雅思教练项目（作者 **yan**，在小红书和 B 站都有分享）。
+那套项目覆盖听说读写词汇多个模块，`~/.ielts/` 下能看到它的全貌：
+
+```
+~/.ielts/
+├─ profile.md       个人目标与背景
+├─ scores.md        历次成绩汇总
+├─ scoring.md       评分标准摘录
+├─ progress/        学习进度
+├─ vocab/           词汇
+├─ listening/  reading/  speaking/  audio/
+├─ exams/           真题
+└─ writing/         ← 本项目只读写这里
+```
+
+本项目**只负责 `writing/` 这一块**，其他目录一律不碰。
+
+共用一个数据根是有意的：那套项目里的 `ielts-dashboard` 直接读 `writing/submissions/`，
+按 `writingSubmissionSchema` 展示分数趋势、四维雷达和高频错误。批改结果按同一份契约落盘，
+打开看板就能看到新记录，不需要导入或迁移——这也是为什么 `npm run check` 要校验 schema，
+校验不过的文件会被看板静默跳过。
+
+### 不装那套项目也能单独用
+
+本项目不依赖它的任何代码。`~/.ielts/writing/` 只是一组约定好的文件路径，
+目录不存在时首次写入会自动创建（`ensureDirs()` 走 `mkdirSync(recursive: true)`）。
+
+数据根可以用环境变量改：
+
+```bash
+IELTS_HOME=D:/ielts-data npm start    # 默认是 ~/.ielts
+```
+
+代价是没有看板，结果得自己打开 `submissions/` 下的 md 文件看。
+
+### 隐私
+
+- **全部本地**：不登录、不上传、不向第三方传输任何内容。
+- **模型调用可选**：队列模式完全不联网，只写本地任务文件；直连模式只把当次作文发给你自己配置的 API 端点。
+- **仓库里没有数据**：`~/.ielts/` 在用户目录下，不在项目目录内；`config.local.json`（存 API key）已被 `.gitignore` 排除。
+  clone 这个仓库拿到的是代码，不含任何人的作文。
+- Task 1 的题干截图跟着记录走，存在 `assessments/<id>/image.jpg`，同样只在本地。
+
 ## 落盘位置
 
 ```
